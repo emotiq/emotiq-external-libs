@@ -13,6 +13,8 @@
 # debug
 set -x
 
+echo "Stage: ${TRAVIS_BUILD_STAGE_NAME:-unknown}"
+
 BASE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GMP_SRC=https://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2
 # GMP_HG_REPO="https://gmplib.org/repo/gmp-6.1/"
