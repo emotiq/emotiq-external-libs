@@ -15,10 +15,10 @@ addons:
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install curl    ; fi
+script:
+  - ./build-crypto-pairings.bash
 jobs:
   include:
-    - script:
-        - ./build-crypto-pairings.bash
     - stage: GitHub Release
       deploy:
         provider: releases
