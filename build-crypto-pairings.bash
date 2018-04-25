@@ -78,7 +78,7 @@ export CXXFLAGS=-I${inc}
 export LDFLAGS=-L${lib}
 
 cd ${src} \
-    && curl ${PBC_SRC} | tar xvf - \
+    && curl ${PBC_SRC} | tar xvfz - \
     && cd ${pbc} \
     && ./configure --prefix=${prefix} \
     && make \
