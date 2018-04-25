@@ -16,8 +16,8 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install curl    ; fi
 script:
-  # - ./build-crypto-pairings.bash
-  - echo "Build and test goes here"
+  - ./build-crypto-pairings.bash
+  # - echo "Build and test goes here"
 
 deploy:
   provider: releases
@@ -29,7 +29,8 @@ deploy:
   file: "var/libLispPBCIntf-${TRAVIS_OS_NAME:-unknown}.tgz"
   skip_cleanup: true
   on:
-    all_branches: true
+    tags: true
+    # all_branches: true
     # branches:
     #   only:
     #     - master
