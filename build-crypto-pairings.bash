@@ -86,3 +86,6 @@ cd ${src} \
 
 cd ${pbcintf} && \
     make --makefile=${MAKETARGET} PREFIX=${prefix}
+
+cd ${prefix} && \
+    tar cvfz ../libLispPBCIntf-${TRAVIS_OS_NAME:-unknown}.tgz *
