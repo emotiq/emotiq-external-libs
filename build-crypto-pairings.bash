@@ -11,7 +11,7 @@
 
 
 # debug
-set -x
+# set -x
 
 echo "Stage: ${TRAVIS_BUILD_STAGE_NAME:-unknown}"
 
