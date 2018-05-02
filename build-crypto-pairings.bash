@@ -86,8 +86,17 @@ cd ${src} \
     && make \
     && make install
 
-cd ${pbcintf} && \
-    make --makefile=${MAKETARGET} PREFIX=${prefix}
+# Use @rpath in libraries ids for macOS
+case ${uname_s} in
+    Darwin*)
+        cd ${lib} && \
+          install_name_tool -id '@rpath/libgmp.dylib' libgmp.dylib && \
+          install_name_tool -id '@rpath/libpbc.dylib' libpbc.dylib
+        ;;
+    *)
+        echo 'No changes for libraries ids needed'
+        ;;
+esac
 
 cd ${prefix} && \
     tar cvfz ../libLispPBCIntf-${TRAVIS_OS_NAME:-unknown}.tgz *
