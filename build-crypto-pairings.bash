@@ -99,4 +99,4 @@ case ${uname_s} in
 esac
 
 cd ${prefix} && \
-    tar cvfz ../libLispPBCIntf-${TRAVIS_OS_NAME:-unknown}.tgz *
+    tar cvfz ../emotiq-external-libs-${TRAVIS_OS_NAME:-unknown}.tgz *
