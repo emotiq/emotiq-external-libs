@@ -11,7 +11,7 @@
 
 
 # debug
-# set -x
+set -x
 
 echo "Stage: ${TRAVIS_BUILD_STAGE_NAME:-unknown}"
 
@@ -74,6 +74,11 @@ if [ ! -d ${inc} ]; then
     exit 1
 fi
 
+# Use @rpath in libraries ids for macOS
+if [[ ${uname_s} = Darwin* ]] ; then
+  (cd ${lib} && install_name_tool -id '@rpath/libgmp.dylib' libgmp.dylib)
+fi
+
 export CFLAGS=-I${inc}
 export CPPFLAGS=-I${inc}
 export CXXFLAGS=-I${inc}
@@ -86,8 +91,10 @@ cd ${src} \
     && make \
     && make install
 
-cd ${pbcintf} && \
-    make --makefile=${MAKETARGET} PREFIX=${prefix}
+# Use @rpath in libraries ids for macOS
+if [[ ${uname_s} = Darwin* ]] ; then
+  (cd ${lib} && install_name_tool -id '@rpath/libpbc.dylib' libpbc.dylib)
+fi
 
 cd ${prefix} && \
-    tar cvfz ../libLispPBCIntf-${TRAVIS_OS_NAME:-unknown}.tgz *
+    tar cvfz ../emotiq-external-libs-${TRAVIS_OS_NAME:-unknown}.tgz *
