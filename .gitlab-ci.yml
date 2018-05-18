@@ -12,7 +12,9 @@ stages:
   script:
     - ./build-crypto-pairings.bash
   artifacts:
-    - var/
+    expire_in: 1 week
+    paths:
+      - var/
 
 build:linux:
   <<: *build_definition
