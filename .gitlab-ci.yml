@@ -38,7 +38,7 @@ release:
 .deploy: &deploy_definition
   stage: deploy
   script:
-    - ci/upload-file.sh $(cat /tmp/artifact.txt)
+    - ci/upload-file.sh $(cat var/local/artifact.txt)
 
 deploy:linux:
   <<: *deploy_definition
