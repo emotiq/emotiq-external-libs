@@ -13,8 +13,6 @@
 # debug
 set -x
 
-echo "Stage: ${TRAVIS_BUILD_STAGE_NAME:-unknown}"
-
 BASE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GMP_SRC=https://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2
 # GMP_HG_REPO="https://gmplib.org/repo/gmp-6.1/"
@@ -29,10 +27,12 @@ uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
         MAKETARGET=makefile.linux
+        arch=linux
         echo Using ${MAKETARGET}
         ;;
     Darwin*)
         MAKETARGET=makefile.osx
+        arch=osx
         GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0"
         echo Using ${MAKETARGET}
         ;;
@@ -97,4 +97,5 @@ if [[ ${uname_s} = Darwin* ]] ; then
 fi
 
 cd ${prefix} && \
-    tar cvfz ../emotiq-external-libs-${TRAVIS_OS_NAME:-unknown}.tgz *
+    tar cvfz ../emotiq-external-libs-${arch}.tgz * && \
+    echo "$(pwd)/emotiq-external-libs-${arch}.tgz" >/tmp/artifact.txt

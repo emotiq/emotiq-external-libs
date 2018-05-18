@@ -1,0 +1,55 @@
+variables:
+  GITHUB_USER: emotiq
+  GITHUB_REPO: emotiq-external-libs
+
+stages:
+  - build
+  - release
+  - deploy
+
+.build: &build_definition
+  stage: build
+  script:
+    - ./build-crypto-pairings.bash
+  artifacts:
+    - var/
+
+build:linux:
+  <<: *build_definition
+  tags:
+    - linux
+
+build:macos:
+  <<: *build_definition
+  tags:
+    - macos
+
+release:
+  stage: release
+  tags:
+    - linux
+  script:
+    - github-release release --tag ${CI_COMMIT_TAG}
+
+.deploy: &deploy_definition
+  stage: deploy
+  script:
+    - ci/upload-file.sh $(cat /tmp/artifact.txt)
+
+deploy:linux:
+  <<: *deploy_definition
+  tags:
+    - linux
+  only:
+    - tags
+  dependencies:
+    - build:linux
+
+deploy:macos:
+  <<: *deploy_definition
+  tags:
+    - macos
+  only:
+    - tags
+  dependencies:
+    - build:macos
