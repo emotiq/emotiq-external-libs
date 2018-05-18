@@ -30,6 +30,8 @@ release:
   stage: release
   tags:
     - linux
+  only:
+    - tags
   script:
     - github-release release --tag ${CI_COMMIT_TAG}
 
