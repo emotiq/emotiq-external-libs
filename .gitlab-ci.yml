@@ -12,6 +12,6 @@ build:win:
   tags:
     - win
   script:
+    - uname -a
     - env
     - ls -la
-    
