@@ -13,5 +13,4 @@ build:win:
     - win
   script:
     - uname -a
-    - env
     - ls -la
