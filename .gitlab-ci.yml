@@ -10,7 +10,7 @@ stages:
 .build: &build_definition
   stage: build
   script:
-    - ./build-crypto-pairings.bash
+    - ./build-libs.bash
   artifacts:
     expire_in: 1 week
     paths:
