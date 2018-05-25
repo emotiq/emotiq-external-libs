@@ -98,4 +98,4 @@ fi
 
 cd ${prefix} && \
     tar cvfz ../emotiq-external-libs-${arch}.tgz * && \
-    echo "${BASE}/var/emotiq-external-libs-${arch}.tgz" >artifact.txt
+    echo "var/emotiq-external-libs-${arch}.tgz" >artifact.txt

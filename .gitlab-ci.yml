@@ -32,22 +32,25 @@ build:win32:
   tags:
     - win
 
-.test: &test_definition
-  stage: test
-  tags:
-    - linux
-  script:
-    - ls -alR var
-
-test:linux:
-  <<: *test_definition
-  dependencies:
-    - build:linux
-
-test:macos:
-  <<: *test_definition
-  dependencies:
-    - build:macos
+#
+#  Placeholder for debugging/testing
+#
+# .test: &test_definition
+#   stage: test
+#   tags:
+#     - linux
+#   script:
+#     - ls -alR var
+#
+# test:linux:
+#   <<: *test_definition
+#   dependencies:
+#     - build:linux
+#
+# test:macos:
+#   <<: *test_definition
+#   dependencies:
+#     - build:macos
 
 test:win32:
   <<: *test_definition
