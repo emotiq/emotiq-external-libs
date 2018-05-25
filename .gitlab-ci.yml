@@ -26,7 +26,7 @@ build:macos:
   tags:
     - macos
 
-build:win:
+build:win32:
   <<: *build_definition
   tags:
     - win
@@ -63,11 +63,11 @@ deploy:macos:
   dependencies:
     - build:macos
 
-deploy:macos:
+deploy:win32:
   <<: *deploy_definition
   tags:
     - win
   only:
     - tags
   dependencies:
-    - build:win
+    - build:win32
