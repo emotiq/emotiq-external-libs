@@ -51,11 +51,12 @@ build:win32:
 #   <<: *test_definition
 #   dependencies:
 #     - build:macos
-
-test:win32:
-  <<: *test_definition
-  dependencies:
-    - build:win32
+#
+# test:win32:
+#   <<: *test_definition
+#   dependencies:
+#     - build:win32
+#
 
 release:
   stage: release
