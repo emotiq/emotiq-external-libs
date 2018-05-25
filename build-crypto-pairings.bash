@@ -26,20 +26,20 @@ pbcintf=${dist}
 uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
-        MAKETARGET=makefile.linux
         arch=linux
-        echo Using ${MAKETARGET}
         ;;
     Darwin*)
-        MAKETARGET=makefile.osx
         arch=osx
         GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0"
-        echo Using ${MAKETARGET}
+        ;;
+    CYGWIN_NT*)
+        arch=win
+        GMP_CONFIGURE_FLAGS="--disable-static --enable-shared --host=core2-unknown-cygwin"
+        PBC_CONFIGURE_FLAGS="--disable-static --enable-shared"
         ;;
     *)
-        MAKETARGET=makefile.linux
-        echo Unknown OS \"$(uname_s)\" -- defaulting to Linux Makefile
-
+        echo Unknown OS \"$(uname_s)\"
+        exit 127
         ;;
 esac
 
@@ -87,7 +87,7 @@ export LDFLAGS=-L${lib}
 cd ${src} \
     && curl ${PBC_SRC} | tar xvfz - \
     && cd ${pbc} \
-    && ./configure --prefix=${prefix} \
+    && ./configure ${PBC_CONFIGURE_FLAGS} --prefix=${prefix} \
     && make \
     && make install
 

@@ -7,10 +7,67 @@ stages:
   - release
   - deploy
 
-build:win:
+.build: &build_definition
   stage: build
+  script:
+    - ./build-crypto-pairings.bash
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - var/
+
+build:linux:
+  <<: *build_definition
+  tags:
+    - linux
+
+build:macos:
+  <<: *build_definition
+  tags:
+    - macos
+
+build:win:
+  <<: *build_definition
   tags:
     - win
+
+release:
+  stage: release
+  tags:
+    - linux
+  only:
+    - tags
   script:
-    - uname -a
-    - ls -la
+    - github-release release --tag ${CI_COMMIT_TAG}
+
+.deploy: &deploy_definition
+  stage: deploy
+  script:
+    - ci/upload-file.sh $(cat var/local/artifact.txt)
+
+deploy:linux:
+  <<: *deploy_definition
+  tags:
+    - linux
+  only:
+    - tags
+  dependencies:
+    - build:linux
+
+deploy:macos:
+  <<: *deploy_definition
+  tags:
+    - macos
+  only:
+    - tags
+  dependencies:
+    - build:macos
+
+deploy:macos:
+  <<: *deploy_definition
+  tags:
+    - win
+  only:
+    - tags
+  dependencies:
+    - build:win
