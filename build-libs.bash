@@ -26,12 +26,14 @@ pbcintf=${dist}
 uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
-        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu"
+        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu --disable-shared --enable-static"
+        PBC_CONFIGURE_FLAGS="--disable-shared --enable-static"
         arch=linux
         ;;
     Darwin*)
         arch=osx
-        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0"
+        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0 --disable-shared --enable-static"
+        PBC_CONFIGURE_FLAGS="--disable-shared --enable-static"
         ;;
     CYGWIN_NT*)
         arch=win32
