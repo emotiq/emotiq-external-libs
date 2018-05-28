@@ -26,6 +26,7 @@ pbcintf=${dist}
 uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
+        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu"
         arch=linux
         ;;
     Darwin*)
