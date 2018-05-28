@@ -5,7 +5,7 @@ case $(uname -s) in
         echo "No time syncing needed"
         ;;
     Darwin*)
-        ntpdate pool.ntp.org
+        sudo ntpdate pool.ntp.org
         ;;
     CYGWIN_NT*)
         w32tm /resync
