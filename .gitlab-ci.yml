@@ -8,6 +8,9 @@ stages:
   - release
   - deploy
 
+before_script:
+  - ci/sync-time.sh
+
 .build: &build_definition
   stage: build
   script:
