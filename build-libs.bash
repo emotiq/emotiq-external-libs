@@ -32,7 +32,7 @@ case ${uname_s} in
         ;;
     Darwin*)
         arch=osx
-        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0 --disable-shared --enable-static"
+        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0 --disable-shared --enable-static --disable-assembly"
         PBC_CONFIGURE_FLAGS="--disable-shared --enable-static"
         ;;
     CYGWIN_NT*)
@@ -63,7 +63,7 @@ mkdir -p ${src}
 cd ${src} \
   && curl ${GMP_SRC} | tar xvfj - \
   && cd ${gmp} \
-  && ./configure ${GMP_CONFIGURE_FLAGS} --prefix=${prefix} \
+  && CFLAGS=-fPIC ./configure ${GMP_CONFIGURE_FLAGS} --prefix=${prefix} \
   && make \
   && make install
 
@@ -90,7 +90,7 @@ export LDFLAGS=-L${lib}
 cd ${src} \
     && curl ${PBC_SRC} | tar xvfz - \
     && cd ${pbc} \
-    && ./configure ${PBC_CONFIGURE_FLAGS} --prefix=${prefix} \
+    && CFLAGS=-fPIC ./configure ${PBC_CONFIGURE_FLAGS} --prefix=${prefix} \
     && make \
     && make install
 
