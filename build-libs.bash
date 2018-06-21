@@ -26,14 +26,12 @@ pbcintf=${dist}
 uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
-        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu --disable-shared --enable-static"
-        PBC_CONFIGURE_FLAGS="--disable-shared --enable-static"
+        GMP_CONFIGURE_FLAGS="--host=pentium4-pc-linux-gnu"
         arch=linux
         ;;
     Darwin*)
         arch=osx
-        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0 --disable-shared --enable-static --disable-assembly"
-        PBC_CONFIGURE_FLAGS="--disable-shared --enable-static"
+        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0"
         ;;
     CYGWIN_NT*)
         arch=win32
@@ -63,7 +61,7 @@ mkdir -p ${src}
 cd ${src} \
   && curl ${GMP_SRC} | tar xvfj - \
   && cd ${gmp} \
-  && CFLAGS=-fPIC ./configure ${GMP_CONFIGURE_FLAGS} --prefix=${prefix} \
+  && ./configure ${GMP_CONFIGURE_FLAGS} --prefix=${prefix} \
   && make \
   && make install
 
@@ -90,7 +88,7 @@ export LDFLAGS=-L${lib}
 cd ${src} \
     && curl ${PBC_SRC} | tar xvfz - \
     && cd ${pbc} \
-    && CFLAGS=-fPIC ./configure ${PBC_CONFIGURE_FLAGS} --prefix=${prefix} \
+    && ./configure ${PBC_CONFIGURE_FLAGS} --prefix=${prefix} \
     && make \
     && make install
 
