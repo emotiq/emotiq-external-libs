@@ -9,9 +9,17 @@
 # MacOS
 #   XCode needs to be installed
 
-
 # debug
 set -x
+
+install_linux_deps() {
+  sudo apt-get update && sudo apt-get install -y \
+    libtool
+}
+
+install_macos_deps() {
+  brew install libtool
+}
 
 BASE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LIBUV_VERSION=1.20.3
@@ -24,6 +32,20 @@ src=${var}/src
 
 lib=${prefix}/lib
 inc=${prefix}/include
+
+case $(uname -s) in
+    Linux*)
+        install_linux_deps
+        ;;
+    Darwin*)
+        install_macos_deps
+        ;;
+    *)
+        echo Unknown OS \"$(uname_s)\"
+
+        ;;
+esac
+
 
 # Build libuv
 
