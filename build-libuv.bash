@@ -18,7 +18,7 @@ install_linux_deps() {
 }
 
 install_macos_deps() {
-  brew install libtool
+  brew install libtool autoconf automake
 }
 
 BASE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
