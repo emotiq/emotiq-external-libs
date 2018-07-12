@@ -52,15 +52,20 @@ release:
   only:
     - tags
   script:
-    - github-release release --tag ${CI_COMMIT_TAG}
+    - github-release release --tag ${CI_COMMIT_TAG} -c ${CI_COMMIT_SHA} -d "${CI_COMMIT_MESSAGE}"
 
-.deploy: &deploy_definition
+.deploy_pbc: &deploy_definition_pbc
   stage: deploy
   script:
     - ci/upload-file.sh $(cat var/local/artifact.txt)
 
-deploy:linux:
-  <<: *deploy_definition
+.deploy_libuv: &deploy_definition_libuv
+  stage: deploy
+  script:
+    - ci/upload-file.sh $(cat var/local/artifact.txt)
+
+deploy:linux:pbc:
+  <<: *deploy_definition_pbc
   tags:
     - linux
   only:
@@ -68,11 +73,29 @@ deploy:linux:
   dependencies:
     - build:linux:pbc
 
-deploy:macos:
-  <<: *deploy_definition
+deploy:macos:pbc:
+  <<: *deploy_definition_pbc
   tags:
     - linux
   only:
     - tags
   dependencies:
     - build:macos:pbc
+
+deploy:linux:libuv:
+  <<: *deploy_definition_libuv
+  tags:
+    - linux
+  only:
+    - tags
+  dependencies:
+    - build:linux:libuv
+
+deploy:macos:libuv:
+  <<: *deploy_definition_libuv
+  tags:
+    - linux
+  only:
+    - tags
+  dependencies:
+    - build:macos:libuv

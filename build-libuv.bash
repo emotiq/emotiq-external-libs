@@ -36,9 +36,11 @@ inc=${prefix}/include
 case $(uname -s) in
     Linux*)
         install_linux_deps
+        arch=linux
         ;;
     Darwin*)
         install_macos_deps
+        arch=osx
         ;;
     *)
         echo Unknown OS \"$(uname_s)\"
