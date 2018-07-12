@@ -7,7 +7,7 @@ stages:
   - release
   - deploy
 
-.build: &build_definition
+.build_pbc: &build_definition_pbc
   stage: build
   script:
     - ./build-crypto-pairings.bash
@@ -16,13 +16,32 @@ stages:
     paths:
       - var/
 
-build:linux:
-  <<: *build_definition
+.build_libuv: &build_definition_libuv
+  stage: build
+  script:
+    - ./build-libuv.bash
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - var/
+
+build:linux:pbc:
+  <<: *build_definition_pbc
   tags:
     - linux
 
-build:macos:
-  <<: *build_definition
+build:macos:pbc:
+  <<: *build_definition_pbc
+  tags:
+    - macos
+
+build:linux:libuv:
+  <<: *build_definition_libuv
+  tags:
+    - linux
+
+build:macos:libuv:
+  <<: *build_definition_libuv
   tags:
     - macos
 
@@ -47,7 +66,7 @@ deploy:linux:
   only:
     - tags
   dependencies:
-    - build:linux
+    - build:linux:pbc
 
 deploy:macos:
   <<: *deploy_definition
@@ -56,4 +75,4 @@ deploy:macos:
   only:
     - tags
   dependencies:
-    - build:macos
+    - build:macos:pbc
