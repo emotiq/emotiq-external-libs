@@ -30,7 +30,7 @@ inc=${prefix}/include
 mkdir -p ${src}
 
 cd ${src} \
-  && curl ${LIBUV_SRC} | tar xvfz - \
+  && curl -L ${LIBUV_SRC} | tar xvfz - \
   && cd libuv-${LIBUV_VERSION} \
   && ./autogen.sh \
   && ./configure --prefix=${prefix} \
