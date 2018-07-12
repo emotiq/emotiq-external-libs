@@ -73,4 +73,4 @@ fi
 
 cd ${prefix} && \
     tar cvfz ../emotiq-libuv-${arch}.tgz * && \
-    echo "${BASE}/var/emotiq-libuv-${arch}.tgz" >artifact.txt
+    echo "var/emotiq-libuv-${arch}.tgz" >artifact.txt
