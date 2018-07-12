@@ -43,7 +43,7 @@ case $(uname -s) in
         arch=osx
         ;;
     *)
-        echo Unknown OS \"$(uname_s)\"
+        echo Unknown OS \"$(uname -s)\"
 
         ;;
 esac
