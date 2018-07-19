@@ -52,7 +52,7 @@ deploy:linux:
 deploy:macos:
   <<: *deploy_definition
   tags:
-    - macos
+    - linux
   only:
     - tags
   dependencies:

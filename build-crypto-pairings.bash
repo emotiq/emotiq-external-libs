@@ -18,27 +18,18 @@ GMP_SRC=https://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2
 # GMP_HG_REPO="https://gmplib.org/repo/gmp-6.1/"
 PBC_SRC=https://crypto.stanford.edu/pbc/files/pbc-0.5.14.tar.gz
 
-# where the tarballs should be
-dist=${BASE}/src/PBC-Intf
-# pbc intf files are in the same place
-pbcintf=${dist}
-
 uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
-        MAKETARGET=makefile.linux
         arch=linux
-        echo Using ${MAKETARGET}
+        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu"
         ;;
     Darwin*)
-        MAKETARGET=makefile.osx
         arch=osx
         GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0"
-        echo Using ${MAKETARGET}
         ;;
     *)
-        MAKETARGET=makefile.linux
-        echo Unknown OS \"$(uname_s)\" -- defaulting to Linux Makefile
+        echo Unknown OS \"$(uname_s)\"
 
         ;;
 esac
@@ -98,4 +89,4 @@ fi
 
 cd ${prefix} && \
     tar cvfz ../emotiq-external-libs-${arch}.tgz * && \
-    echo "${BASE}/var/emotiq-external-libs-${arch}.tgz" >artifact.txt
+    echo "var/emotiq-external-libs-${arch}.tgz" >artifact.txt
