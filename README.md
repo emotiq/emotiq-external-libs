@@ -3,3 +3,4 @@
 * Builds binaries for:
   * GMP v6.1.2
   * PBC v0.5.14
+  * libUV v1.20.3
