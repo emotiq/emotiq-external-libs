@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 #
-#  Assuming the proper development tools are in place, make the
-#  libraries needed, and produce a shared object suitable for loading
-#  the code for Pair Based Curves (PBC).
+#  Assuming the proper development tools are in place,
+#  build shared libuv library for use in Emotiq project
 #
 # Linux
 #   apt-get install gcc make g++ flex bison
