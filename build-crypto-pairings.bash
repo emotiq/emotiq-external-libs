@@ -22,7 +22,7 @@ uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
         arch=linux
-        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu --enable-static"
+        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu --enable-static --disable-assembly"
         PBC_CONFIGURE_FLAGS="--enable-static"
         ;;
     Darwin*)
@@ -48,6 +48,18 @@ inc=${prefix}/include
 
 # PBC depends on GMP, so build GMP first
 
+if [[ ${uname_s} = Linux* ]] ; then
+  export CFLAGS="-I${inc} -fPIC"
+  export CPPFLAGS="-I${inc} -fPIC"
+  export CXXFLAGS="-I${inc} -fPIC"
+  export LDFLAGS=-L${lib}
+else
+  export CFLAGS="-I${inc}"
+  export CPPFLAGS="-I${inc}"
+  export CXXFLAGS="-I${inc}"
+  export LDFLAGS=-L${lib}
+fi
+
 mkdir -p ${src}
 
 cd ${src} \
@@ -71,11 +83,6 @@ fi
 if [[ ${uname_s} = Darwin* ]] ; then
   (cd ${lib} && install_name_tool -id '@rpath/libgmp.dylib' libgmp.dylib)
 fi
-
-export CFLAGS=-I${inc}
-export CPPFLAGS=-I${inc}
-export CXXFLAGS=-I${inc}
-export LDFLAGS=-L${lib}
 
 cd ${src} \
     && curl ${PBC_SRC} | tar xvfz - \
