@@ -22,11 +22,13 @@ uname_s=$(uname -s)
 case ${uname_s} in
     Linux*)
         arch=linux
-        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu"
+        GMP_CONFIGURE_FLAGS="--host=core2-pc-linux-gnu --enable-static"
+        PBC_CONFIGURE_FLAGS="--enable-static"
         ;;
     Darwin*)
         arch=osx
-        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0"
+        GMP_CONFIGURE_FLAGS="--host=core2-apple-darwin17.5.0 --enable-static --disable-assembly"
+        PBC_CONFIGURE_FLAGS="--enable-static"
         ;;
     *)
         echo Unknown OS \"$(uname_s)\"
@@ -78,7 +80,7 @@ export LDFLAGS=-L${lib}
 cd ${src} \
     && curl ${PBC_SRC} | tar xvfz - \
     && cd ${pbc} \
-    && ./configure --prefix=${prefix} \
+    && ./configure ${PBC_CONFIGURE_FLAGS} --prefix=${prefix} \
     && make \
     && make install
 
